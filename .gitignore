@@ -229,3 +229,11 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+*.docx
+*.pdf
+*.mat
+*.pptx
+*.txt
+
+
+!data2/MDP-solve V pis.mat
