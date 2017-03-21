@@ -54,6 +54,7 @@ endMaxX = max(endFirTurn.x,endSecTurn.x);
 endMaxY = max(endFirTurn.y,endSecTurn.y);
 %% reward
 reward  = startMinY - endMinY;% v4
+reward = reward - 0.05*(endTime-startTime);
 % if d == 1
 % %     reward  = (startMinY - endMinY)*sqrt((startMinY - endMinY)^2);% v5
 %     reward  = startMinY - endMinY;% v4
