@@ -10,7 +10,8 @@ end
 if isempty(saveSubaction)
    saveSubaction = 0;
 end
-
+%% reset topTouchFlag
+s_f.topTouchFlag = 0;
 %% action initialize
 % action 0-null,1-hover,2-headTouch,3-topTouch,4-trace
 if s_f.action == 0% null
@@ -82,7 +83,7 @@ if saveAction == 2
 end
 
 %% topTouch
-% topTouch 2.1-track iRobot 2.2-land 2.3-touch 2.4-takeoff
+% topTouch 3.1-track iRobot 3.2-land 3.3-touch 3.4-takeoff
 if saveAction == 3
     
     if saveSubaction == 3.1 % track iRobot
