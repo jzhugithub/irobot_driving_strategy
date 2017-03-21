@@ -5,9 +5,9 @@ s_g_head.x = s_g.x + cos(s_g.theta) * 0.2;
 s_g_head.y = s_g.y + sin(s_g.theta) * 0.2;
 s_g_head.z = s_g.z;
 
-if norm([s_f.x-s_g_head.x s_f.y-s_g_head.y])<0.2 && (s_f.z-s_g_head.z)<0.1
+if (s_f.z-s_g_head.z)<0.1 && norm([s_f.x-s_g_head.x s_f.y-s_g_head.y])<0.2
     touchType = 2;
-elseif norm([s_f.x-s_g_head.x s_f.y-s_g_head.y])<0.2 && s_f.z<0.25 && s_f.topTouchFlag == 1
+elseif s_f.topTouchFlag == 1  && s_f.z<0.25 && norm([s_f.x-s_g_head.x s_f.y-s_g_head.y])<0.2
     touchType = 1;
 else
     touchType = 0;
