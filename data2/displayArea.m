@@ -36,7 +36,8 @@ else
     axis([Time-20,Time+5,-1,3]);
     %% delete
     pause(delay);
-    delete(iRobot,TariRobot,quadrotor,iRobotZ,turn1,turn2);
+    set([iRobot,TariRobot,quadrotor,iRobotZ,turn1,turn2],'visible','off');
+%     delete(iRobot,TariRobot,quadrotor,iRobotZ,turn1,turn2);
 %     delete(TariRobot,iRobotZ);%%%%%%%%%%% for debug
 end
 end
