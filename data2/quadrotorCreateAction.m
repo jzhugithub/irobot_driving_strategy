@@ -1,5 +1,14 @@
-function [s_f]=quadrotorCreateAction(stateDim,s_f,s_g,maxPisV,pis,Time,minDoingValue)
+function [s_f]=quadrotorCreateAction(stateDim,s_f,s_g,maxPisV,pis,Time,minDoingValue,decisionDt)
 % 0-null,1-hover,2-headTouch,3-topTouch,4-trace
+persistent lastDecisionTime;
+if isempty(lastDecisionTime)
+   lastDecisionTime = 0;
+end
+% task 0-hover,1-track,2-land,3-touch,4-takeoff,5-trace
+if (Time> lastDecisionTime + decisionDt) && (s_f.task == 0 || s_f.task == 1 || s_f.task == 5)
+    s_f.decisionFlag = 1;
+    Time
+end
 if s_f.decisionFlag == 1
     s_f.decisionFlag = 0;
     
@@ -19,9 +28,8 @@ if s_f.decisionFlag == 1
         else
             s_f.action = 1;
         end
-        
-        
     end
+    lastDecisionTime = Time;
 else
     s_f.action = 0;
 end

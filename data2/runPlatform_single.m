@@ -22,7 +22,7 @@ touchType = 0;% 0-null,1-topTouch,2-collision
 disp('Main Start');
 resetFlag = 1;
 for Time = 0:dt:stopTime
-    s_f = quadrotorCreateAction(stateDim,s_f,s_g,maxPisV,pis,Time,0);
+    s_f = quadrotorCreateAction(stateDim,s_f,s_g,maxPisV,pis,Time,0,1);
     s_f = quadrotorAction2Task(s_f,s_g,Time,dt);
     s_f = quadrotorTask2Mode(s_f,s_g);
     s_f = quadrotorStateUpdata(s_f,dt);
