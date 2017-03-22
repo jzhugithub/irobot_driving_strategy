@@ -2,16 +2,17 @@
 % 
 % 
 % clear;
+figure(1)
 clf;
 %% time
 Time = 0;
 dt = 0.04;
 stopTime = 600;
 %% iRobot
-s_g = iRobotCreator(10,10,3,'.b');% x,y,theta,color
+s_g = iRobotCreator(17,10,0,[0 0 1]);% x,y,theta,color
 % s_g.mode = 0;% 0-move,1-turn
 %% quadrotor
-s_f = quadrotorCreator(0,0);% x,y
+s_f = quadrotorCreator(10,16);% x,y
 % s_f.topTouchFlag = 0;% 0-null,1-topTouch;
 % s_f.action = 0;% 0-null,1-hover,2-headTouch,3-topTouch,4-trace
 % s_f.task = 0;% 0-hover,1-track,2-land,3-touch,4-takeoff,5-trace
