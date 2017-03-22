@@ -8,7 +8,7 @@ Time = 0;
 dt = 0.05;
 stopTime = 600;
 %% iRobot
-s_g = iRobotCreator(10,10,pi/2,'.b');% x,y,theta,color
+s_g = iRobotCreator(10,10,pi/2,[0 0 1]);% x,y,theta,color
 % s_g.mode = 0;% 0-move,1-turn
 %% quadrotor
 s_f = quadrotorCreator(0,0);% x,y
@@ -21,8 +21,8 @@ touchType = 0;% 0-null,1-topTouch,2-collision
 %% MDP-solve P R
 disp('MDP-solve P R Start');
 % variable definition
-sampleStateNumber = 20000;
-stateDim = [8,10,1,5];% thetag Tg Dg l
+sampleStateNumber = 60000;
+stateDim = [16,10,3,5];% thetag Tg Dg l
 stateNum = prod(stateDim);
 actionNum = 3;%action
 Nsas2 = zeros(stateNum,actionNum,stateNum);
@@ -74,7 +74,7 @@ for i = 1:sampleStateNumber
             tempS_g = iRobotStateUpdata(tempS_g,Time,dt,1);
 %             displayArea(tempS_g,tempS_f,Time,dt*5,1);%%%%%%%%%%% for debug
             resetFlag = 0;
-            if tempS_f.decisionFlag == 1
+            if tempS_f.decisionFlag == 1 && tempS_g.mode == 0
                 break;
             end
         end
@@ -87,7 +87,7 @@ for i = 1:sampleStateNumber
         tempNsas2Count = Nsas2(startDState.id,thisAction,endDState.id) + 1;
         Nsas2(startDState.id,thisAction,endDState.id) = tempNsas2Count;
         % reward
-        reward = rewardCompute(thisAction,startS_g,endS_g,startTime,endTime);
+        reward = rewardCompute(thisAction,startS_g,endS_g,startTime,endTime,startDState.d);
         % Rsa_num
         tempRsa_numItem = Rsa_num(startDState.id,thisAction) + reward;
         Rsa_num(startDState.id,thisAction) = tempRsa_numItem;
