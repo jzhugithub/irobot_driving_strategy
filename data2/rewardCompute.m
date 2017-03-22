@@ -1,4 +1,4 @@
-function reward = rewardCompute(thisAction,startS_g,endS_g,startTime,endTime)
+function reward = rewardCompute(thisAction,startS_g,endS_g,startTime,endTime,d)
 %% hover action
 if thisAction == 1
     reward = 0;
@@ -53,29 +53,29 @@ endMinY = min(endFirTurn.y,endSecTurn.y);
 endMaxX = max(endFirTurn.x,endSecTurn.x);
 endMaxY = max(endFirTurn.y,endSecTurn.y);
 %% reward
-reward  = startMinY - endMinY;% v4
+% reward  = startMinY - endMinY;% v4
+if d == 1
+%     reward  = (startMinY - endMinY)*sqrt((startMinY - endMinY)^2);% v5
+    reward  = startMinY - endMinY;% v4
+%     reward  = startMinY - endMinY;% v3
+%     reward = (startCenter.y - endCenter.y);% v2
+%     reward = (startCenter.y - endCenter.y)/dt;% v1
+elseif d == 2
+%     reward  = (startMinY - endMinY)*sqrt((startMinY - endMinY)^2);% v5
+    reward  = startMinX - endMinX;% v4
+%     reward  = startMinX - endMinX;% v3
+%     reward = (startCenter.x - endCenter.x);% v2
+%     reward = (startCenter.x - endCenter.x)/dt;% v1
+elseif d == 3
+%     reward  = (startMinY - endMinY)*sqrt((startMinY - endMinY)^2);% v5
+    reward  = endMinX - startMinX;% v4
+%     reward  = endMinX - startMinX;% v3
+%     reward = (endCenter.x - startCenter.x);% v2
+%     reward = (endCenter.x - startCenter.x)/dt;% v1
+else
+    disp('startDState.d');
+end
 reward = reward - 0.05*(endTime-startTime);
-% if d == 1
-% %     reward  = (startMinY - endMinY)*sqrt((startMinY - endMinY)^2);% v5
-%     reward  = startMinY - endMinY;% v4
-% %     reward  = startMinY - endMinY;% v3
-% %     reward = (startCenter.y - endCenter.y);% v2
-% %     reward = (startCenter.y - endCenter.y)/dt;% v1
-% elseif d == 2
-% %     reward  = (startMinY - endMinY)*sqrt((startMinY - endMinY)^2);% v5
-%     reward  = startMinY - endMinY;% v4
-% %     reward  = startMinX - endMinX;% v3
-% %     reward = (startCenter.x - endCenter.x);% v2
-% %     reward = (startCenter.x - endCenter.x)/dt;% v1
-% elseif d == 3
-% %     reward  = (startMinY - endMinY)*sqrt((startMinY - endMinY)^2);% v5
-%     reward  = startMinY - endMinY;% v4
-% %     reward  = endMinX - startMinX;% v3
-% %     reward = (endCenter.x - startCenter.x);% v2
-% %     reward = (endCenter.x - startCenter.x)/dt;% v1
-% else
-%     disp('startDState.d');
-% end
 %% for debug
 % figure(2)
 % hold on;
