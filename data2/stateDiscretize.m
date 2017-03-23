@@ -12,9 +12,9 @@ discState.t = max([min([ceil(Time/2),10]),1]);
 % max([1,floor((Time+1.99)/2)]);
 %% d 
 discState.d = 1;
-if s_g.x>18
+if s_g.x>16
     discState.d = 2;
-elseif s_g.x<2
+elseif s_g.x<4
     discState.d = 3;
 end
 %% l
