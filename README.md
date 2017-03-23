@@ -1,2 +1,12 @@
 ## irobot driving strategy
-for IARC 2016
+
+For IARC 2016.
+
+Have safe area.
+
+Irobot angle is discrete as 18 number.
+
+Without gamma.
+
+To use gamma, delete code with "###" in "quadrotorCreateAction_mult.m"
+
