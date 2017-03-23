@@ -4,6 +4,13 @@
 % clear;
 figure(1)
 clf;
+figure(2)
+clf;
+%% video
+global aviobj;
+aviobj = VideoWriter('strategy_sim');
+aviobj.FrameRate = 10;
+open(aviobj);
 %% time
 Time = 0;
 dt = 0.05;
@@ -35,7 +42,7 @@ touchType = 0;% 0-null,1-topTouch,2-collision
 disp('Main Start');
 resetFlag = 1;
 for Time = 0:dt:stopTime
-    [s_f,s_gTarNum] = quadrotorCreateAction_mult(stateDim,s_f,s_g_mult,maxPisV,pis,Rsa,Time,1,0.5);
+    [s_f,s_gTarNum] = quadrotorCreateAction_mult(stateDim,s_f,s_g_mult,maxPisV,pis,Rsa,Time,1.2,1);
     s_f = quadrotorAction2Task(s_f,s_g_mult(s_gTarNum),Time,dt);
     s_f = quadrotorTask2Mode(s_f,s_g_mult(s_gTarNum));
     s_f = quadrotorStateUpdata(s_f,dt);
@@ -55,4 +62,7 @@ for Time = 0:dt:stopTime
     displayArea(s_g_mult,s_f,Time,dt/30,s_gTarNum);
     resetFlag = 0;
 end
+% close video
+close(aviobj);
+
 disp('Main End');

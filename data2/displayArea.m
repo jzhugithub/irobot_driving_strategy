@@ -1,8 +1,9 @@
 function displayArea(s_g_mult,s_f,Time,delay,s_gTarNum)
 %% plot rate
 persistent plotFrame;
+global aviobj;
 if isempty(plotFrame)
-   plotFrame = 0;
+    plotFrame = 0;
 end
 if plotFrame >1
     plotFrame = plotFrame - 1;
@@ -16,16 +17,19 @@ else
     hold on;
     for s_gNum = 1:size(s_g_mult,2)
         iRobotTrace(s_gNum) = plot(s_g_mult(s_gNum).x,s_g_mult(s_gNum).y,'.','Color',s_g_mult(s_gNum).color,'MarkerSize',3);
-        iRobot(s_gNum) = plot(s_g_mult(s_gNum).x,s_g_mult(s_gNum).y,'ok','MarkerSize',8);
+        iRobot(s_gNum) = plot(s_g_mult(s_gNum).x,s_g_mult(s_gNum).y,'ok','MarkerSize',10);
     end
 
-    TariRobot = plot(s_g_mult(s_gTarNum).x,s_g_mult(s_gTarNum).y,'or','MarkerSize',8);
-    quadrotor = plot(s_f.x,s_f.y,'.k','MarkerSize',16);
+    TariRobot = plot(s_g_mult(s_gTarNum).x,s_g_mult(s_gTarNum).y,'or','MarkerSize',10);
+    quadrotor = plot(s_f.x,s_f.y,'.k','MarkerSize',32);
 %     quadrotorTrace = plot(s_f.x,s_f.y,'.g','MarkerSize',3);%%%%%%%%%%% for debug
     [firTurn,secTurn] = computeEnd(s_g_mult(s_gTarNum),Time);
     turn1 = plot(firTurn.x,firTurn.y,'*b');
     turn2 = plot(secTurn.x,secTurn.y,'*r');
     axis([0,20,0,20]);
+    % write video
+    currFrame = getframe;
+    writeVideo(aviobj,currFrame);
     %% z view
     figure(2)
     box on;
