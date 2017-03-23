@@ -8,7 +8,7 @@ figure(2)
 clf;
 %% video
 global aviobj;
-aviobj = VideoWriter('strategy_sim');
+aviobj = VideoWriter('strategy_sim','MPEG-4');
 aviobj.FrameRate = 10;
 open(aviobj);
 %% time
