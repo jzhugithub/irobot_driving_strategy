@@ -20,7 +20,7 @@ if s_f.decisionFlag == 1
     
     distancef2g = zeros(1,size(s_g_mult,2));
     pisValue = zeros(1,size(s_g_mult,2));
-    aPisValue = -100*ones(1,size(s_g_mult,2));
+    aPisValue = -10000*ones(1,size(s_g_mult,2));
     for s_gNum = 1:size(s_g_mult,2)
         [firTurn,secTurn] = computeEnd(s_g_mult(s_gNum),Time);
         if firTurn.y<0 || secTurn.y<0

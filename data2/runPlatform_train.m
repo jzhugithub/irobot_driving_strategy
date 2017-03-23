@@ -21,7 +21,7 @@ touchType = 0;% 0-null,1-topTouch,2-collision
 %% MDP-solve P R
 disp('MDP-solve P R Start');
 % variable definition
-sampleStateNumber = 60000;
+sampleStateNumber = 250000;
 stateDim = [16,10,3,5];% thetag Tg Dg l
 stateNum = prod(stateDim);
 actionNum = 3;%action
