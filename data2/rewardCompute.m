@@ -8,6 +8,10 @@ end
 omega = pi/2;
 dt = endTime - startTime;
 normEndTime = mod(endTime,20);
+tarPoint2.x = -20;
+tarPoint2.y = -20;
+tarPoint3.x = 40;
+tarPoint3.y = -20;
 %% start
 startFirTurn.x = 0;
 startFirTurn.y = 0;
@@ -24,12 +28,18 @@ else
     startSecTurn.x = startFirTurn.x + cos(startS_g.theta - omega * (20-startTime)) * startS_g.v * 18;
     startSecTurn.y = startFirTurn.y + sin(startS_g.theta - omega * (20-startTime)) * startS_g.v * 18;
 end
-startCenter.x = (startFirTurn.x + startSecTurn.x)/2;
-startCenter.y = (startFirTurn.y + startSecTurn.y)/2;
-startMinX = min(startFirTurn.x,startSecTurn.x);
+% startCenter.x = (startFirTurn.x + startSecTurn.x)/2;
+% startCenter.y = (startFirTurn.y + startSecTurn.y)/2;
+% startMinX = min(startFirTurn.x,startSecTurn.x);
 startMinY = min(startFirTurn.y,startSecTurn.y);
-startMaxX = max(startFirTurn.x,startSecTurn.x);
-startMaxY = max(startFirTurn.y,startSecTurn.y);
+% startMaxX = max(startFirTurn.x,startSecTurn.x);
+% startMaxY = max(startFirTurn.y,startSecTurn.y);
+startFirTurn.distance2 = norm([tarPoint2.x-startFirTurn.x tarPoint2.y-startFirTurn.y]);
+startSecTurn.distance2 = norm([tarPoint2.x-startSecTurn.x tarPoint2.y-startSecTurn.y]);
+startMinDis2 = min(startFirTurn.distance2,startSecTurn.distance2);
+startFirTurn.distance3 = norm([tarPoint3.x-startFirTurn.x tarPoint3.y-startFirTurn.y]);
+startSecTurn.distance3 = norm([tarPoint3.x-startSecTurn.x tarPoint3.y-startSecTurn.y]);
+startMinDis3 = min(startFirTurn.distance3,startSecTurn.distance3);
 %% end
 endFirTurn.x = 0;
 endFirTurn.y = 0;
@@ -46,35 +56,45 @@ else
     endSecTurn.x = endFirTurn.x + cos(endS_g.theta - omega * (20-normEndTime)) * endS_g.v * 18;
     endSecTurn.y = endFirTurn.y + sin(endS_g.theta - omega * (20-normEndTime)) * endS_g.v * 18;
 end
-endCenter.x = (endFirTurn.x + endSecTurn.x)/2;
-endCenter.y = (endFirTurn.y + endSecTurn.y)/2;
-endMinX = min(endFirTurn.x,endSecTurn.x);
+% endCenter.x = (endFirTurn.x + endSecTurn.x)/2;
+% endCenter.y = (endFirTurn.y + endSecTurn.y)/2;
+% endMinX = min(endFirTurn.x,endSecTurn.x);
 endMinY = min(endFirTurn.y,endSecTurn.y);
-endMaxX = max(endFirTurn.x,endSecTurn.x);
-endMaxY = max(endFirTurn.y,endSecTurn.y);
+% endMaxX = max(endFirTurn.x,endSecTurn.x);
+% endMaxY = max(endFirTurn.y,endSecTurn.y);
+endFirTurn.distance2 = norm([tarPoint2.x-endFirTurn.x tarPoint2.y-endFirTurn.y]);
+endSecTurn.distance2 = norm([tarPoint2.x-endSecTurn.x tarPoint2.y-endSecTurn.y]);
+endMinDis2 = min(endFirTurn.distance2,endSecTurn.distance2);
+endFirTurn.distance3 = norm([tarPoint3.x-endFirTurn.x tarPoint3.y-endFirTurn.y]);
+endSecTurn.distance3 = norm([tarPoint3.x-endSecTurn.x tarPoint3.y-endSecTurn.y]);
+endMinDis3 = min(endFirTurn.distance3,endSecTurn.distance3);
 %% reward
-% reward  = startMinY - endMinY;% v4
 if d == 1
-%     reward  = (startMinY - endMinY)*sqrt((startMinY - endMinY)^2);% v5
     reward  = startMinY - endMinY;% v4
+%     reward  = (startMinY - endMinY)*sqrt((startMinY - endMinY)^2);% v5
+%     reward  = startMinY - endMinY;% v4
 %     reward  = startMinY - endMinY;% v3
 %     reward = (startCenter.y - endCenter.y);% v2
 %     reward = (startCenter.y - endCenter.y)/dt;% v1
 elseif d == 2
+    reward = startMinDis2 - endMinDis2;
 %     reward  = (startMinY - endMinY)*sqrt((startMinY - endMinY)^2);% v5
-    reward  = startMinX - endMinX;% v4
+%     reward  = startMinX - endMinX;% v4
 %     reward  = startMinX - endMinX;% v3
 %     reward = (startCenter.x - endCenter.x);% v2
 %     reward = (startCenter.x - endCenter.x)/dt;% v1
 elseif d == 3
+    reward = startMinDis3 - endMinDis3;
 %     reward  = (startMinY - endMinY)*sqrt((startMinY - endMinY)^2);% v5
-    reward  = endMinX - startMinX;% v4
+%     reward  = endMinX - startMinX;% v4
 %     reward  = endMinX - startMinX;% v3
 %     reward = (endCenter.x - startCenter.x);% v2
 %     reward = (endCenter.x - startCenter.x)/dt;% v1
 else
     disp('startDState.d');
 end
+% reward  = startMinY - endMinY;% v4
+% reward = startMinDis - endMinDis;
 reward = reward - 0.05*(endTime-startTime);
 %% for debug
 % figure(2)
